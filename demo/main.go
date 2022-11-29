@@ -2,15 +2,12 @@ package main
 
 import (
 	"fmt"
-	"os"
 
 	yaclip "github.com/Sniper10754/yaclip/parser"
 )
 
 func main() {
-	fmt.Println(os.Args)
-
-	yaclip.Debug = false
+	yaclip.Debug = true
 
 	parser := yaclip.NewParserFromEnv()
 

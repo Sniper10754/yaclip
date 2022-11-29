@@ -43,6 +43,14 @@ func NewParser(args []string) Parser {
 	}
 }
 
+func (p Parser) HandleError(err error) error {
+	if p.PanicOnError {
+		panic(err)
+	} else {
+		return err
+	}
+}
+
 func (p Parser) Parse() ([]Flag, error) {
 	flags := []Flag{}
 
@@ -50,22 +58,19 @@ func (p Parser) Parse() ([]Flag, error) {
 		if i == 0 {
 			continue
 		}
-
-		PrintOnDebug("Parsing " + arg)
-
+		
 		if !strings.HasPrefix(arg, "--") {
 			PrintOnDebug("error: detected invalid syntax")
-			err := errors.New(ErrorParse.Error() + "; invalid argument " + arg)
 
-			if p.PanicOnError {
-				panic(err)
-			} else {
-				return nil, err
-			}
+			return nil, p.HandleError(errors.New(ErrorParse.Error() + "; invalid argument " + arg))
 		}
 
 		if strings.Contains(arg, "=") {
 			z := strings.Split(arg, "=")
+
+			if z[1] == "" {
+				return nil, p.HandleError(errors.New(ErrorParse.Error() + "; no argument found after '=' "))
+			}
 
 			flags = append(flags, Flag{
 				Name:  z[0],
