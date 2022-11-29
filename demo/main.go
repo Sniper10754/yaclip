@@ -10,15 +10,18 @@ import (
 func main() {
 	fmt.Println(os.Args)
 
-	yaclip.Debug = true
+	yaclip.Debug = false
 
 	parser := yaclip.NewParserFromEnv()
 
 	flags, err := parser.Parse()
-	fmt.Println(flags)
-
+	
 	if err != nil {
 		panic(err)
+	}
+
+	for _, v := range flags {
+		fmt.Printf("%s: %s -> %s\n", v.Type, v.Name, v.Value)
 	}
 
 }
