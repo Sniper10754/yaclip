@@ -12,7 +12,7 @@ func main() {
 	parser := yaclip.NewParserFromEnv()
 
 	flags, err := parser.Parse()
-	
+
 	if err != nil {
 		panic(err)
 	}

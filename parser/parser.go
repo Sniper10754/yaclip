@@ -58,7 +58,7 @@ func (p Parser) Parse() ([]Flag, error) {
 		if i == 0 {
 			continue
 		}
-		
+
 		if !strings.HasPrefix(arg, "--") {
 			PrintOnDebug("error: detected invalid syntax")
 
